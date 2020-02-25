@@ -13,9 +13,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   AnimationController _animationController;
   // A duração em milissegundos em que a roleta vai ficar girando
   int _duration = 0;
-  // A quantidade de vezes em qua a roleta irá dar voltas (1.0 == 1 volta; 1.5 == 1 volta e meia; 2.0 == 2 voltas)
+  // A quantidade de vezes em qua a roleta irá dar voltas
+  // (1.0 == 1 volta; 1.5 == 1 volta e meia; 2.0 == 2 voltas)
   double _end = 0.0;
-  // Declara o timer do tap do botão pra saber quanto tempo o usuário manteve pressionado
+  // Declara o timer do tap do botão pra saber quanto tempo o usuário manteve ele pressionado
   Timer _tapTimer;
 
   @override
@@ -36,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   void _start() {
     setState(() {
-      // Altera a duração da animação e reinicia
+      // Altera a duração da animação
       _animationController.duration = Duration(milliseconds: _duration);
       _animationController.forward(from: 0.0);
     });
@@ -51,7 +52,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     _tapTimer = Timer.periodic(Duration(milliseconds: 10), (Timer currentTimer) {
       // Verifica se a duração não ultrapassou os 5 segundos
       if (_duration < 5000) {
-        // O calculo a seguir server pra aumentar a duração exponencialmente, ou seja, quanto mais tempo segurando o botão, a duração irá aumentar mais rapidamente
+        // O cálculo a seguir serve pra aumentar a duração e a quantidade
+        // de voltas de maneira exponencial
         _duration = ((_duration + 10) * 1.01).round();
         _end = (_end + 0.001) * 1.03;
       }
